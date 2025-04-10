@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "36725393069",
+    "project_id": "pearlify-afdfc",
+    "storage_bucket": "pearlify-afdfc.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:36725393069:android:9ccb2932ed07939845e824",
+        "android_client_info": {
+          "package_name": "com.android.application"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDzIfGk5EICe3Rr-YwFrW5ofvbxoR9W5s8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

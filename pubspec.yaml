@@ -1,0 +1,51 @@
+name: helloworld
+description: A new Flutter project.
+
+version: 1.0.0+1
+
+environment:
+  sdk: ">=3.0.0 <4.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  google_fonts: ^6.1.0
+  video_player: ^2.7.2
+  audioplayers: ^6.4.0
+  intl: ^0.18.1
+  firebase_core: ^3.13.0
+  firebase_auth: ^5.5.2
+  cloud_firestore: ^5.6.6
+  fl_chart: ^0.63.0
+
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^2.0.2
+  build_runner: ^2.4.11
+
+flutter:
+  uses-material-design: true
+  assets:
+    - assets/bg.png
+    - assets/logo.png
+    - assets/smiley.png
+    - assets/ocean_animation.gif
+    - assets/old_paper_texture.png
+    - assets/bottle_floating.mp4
+    - assets/floating_bottle.mp4
+    - assets/Breathing_exercise.png
+    - assets/Dear_Self.png
+    - assets/Message_in_bottle.png
+    - assets/Tranquil_Tunes.png
+    - assets/necklace_of_pearls.png
+    - assets/Tranquil_Tunes_bg.png
+    - assets/record1.gif
+    - assets/record2.gif
+    - assets/record3.gif
+    - assets/20.png
+    - assets/21.png
+    - assets/22.png
+    - assets/23.png
+    - assets/necklace/
