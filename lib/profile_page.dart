@@ -14,11 +14,13 @@ class ProfilePage extends StatefulWidget {
 class _ProfilePageState extends State<ProfilePage> {
   final user = FirebaseAuth.instance.currentUser;
   List<Map<String, dynamic>> moodData = [];
+  int necklaceCount = 0;
 
   @override
   void initState() {
     super.initState();
     fetchMoodStats();
+    fetchNecklaceAchievements();
   }
 
   Future<void> fetchMoodStats() async {
@@ -35,6 +37,31 @@ class _ProfilePageState extends State<ProfilePage> {
       });
     }
   }
+
+  Future<void> fetchNecklaceAchievements() async {
+    if (user != null) {
+      final doc = await FirebaseFirestore.instance
+          .collection('users')
+          .doc(user!.uid)
+          .get();
+
+      if (doc.exists) {
+        int necklace = doc.data()?['necklaceCount'] ?? 0;
+        print("📿 Fetched necklace count: $necklace");
+
+        setState(() {
+          necklaceCount = necklace;
+        });
+      } else {
+        print("⚠️ User document not found.");
+      }
+    } else {
+      print("⚠️ User not logged in.");
+    }
+  }
+
+
+
 
   int calculateStreak() {
     int streak = 0;
@@ -53,7 +80,7 @@ class _ProfilePageState extends State<ProfilePage> {
   }
 
   Widget moodChart() {
-    if (moodData.isEmpty) return Text("No mood data yet!");
+    if (moodData.isEmpty) return Text("No mood data yet!", style: GoogleFonts.poppins(color: Colors.white));
 
     List<FlSpot> spots = [];
     for (int i = 0; i < moodData.length; i++) {
@@ -71,7 +98,6 @@ class _ProfilePageState extends State<ProfilePage> {
           spots: spots,
           isCurved: true,
           color: Colors.cyan,
-
           barWidth: 4,
           dotData: FlDotData(show: true),
         )
@@ -129,20 +155,52 @@ class _ProfilePageState extends State<ProfilePage> {
             SizedBox(height: 30),
 
             // Streak Card
+
+
+            SizedBox(height: 30),
+
+            // Achievements Section
             Container(
               padding: EdgeInsets.all(20),
               decoration: BoxDecoration(
-                  color: Colors.white.withOpacity(0.15),
-                  borderRadius: BorderRadius.circular(20)),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                color: Colors.white.withOpacity(0.15),
+                borderRadius: BorderRadius.circular(20),
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text("🌟 Mood Streak",
+                  Text("🏅 Achievements",
                       style: GoogleFonts.poppins(
                           color: Colors.white, fontWeight: FontWeight.bold)),
-                  Text("$streak days",
+                  SizedBox(height: 10),
+                  necklaceCount > 0
+                      ? Wrap(
+                    spacing: 10,
+                    runSpacing: 10,
+                    children: List.generate(necklaceCount, (index) {
+                      int imageNumber = 11 + index; // pearl_11.png to pearl_20.png
+                      return Column(
+                        children: [
+                          Image.asset(
+                            'assets/necklace/pearl_$imageNumber.png',
+                            width: 50,
+                            height: 50,
+                            errorBuilder: (context, error, stackTrace) => Icon(Icons.image_not_supported, color: Colors.white),
+                          ),
+                          SizedBox(height: 4),
+                          Text("Necklace ${index + 1}",
+                              style: GoogleFonts.poppins(
+                                color: Colors.white,
+                                fontSize: 12,
+                              )),
+                        ],
+                      );
+                    }),
+                  )
+                      : Text("No necklaces earned yet!",
                       style: GoogleFonts.poppins(
-                          color: Colors.white, fontSize: 16)),
+                          color: Colors.white.withOpacity(0.7))),
+
                 ],
               ),
             ),
